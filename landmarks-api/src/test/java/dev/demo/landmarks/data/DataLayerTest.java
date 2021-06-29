@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @DataJpaTest
-public class DataLayerTest {
+class DataLayerTest {
 
     @Autowired
     private CountryRepository countryRepository;
