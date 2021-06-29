@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - "POSTGRES_PASSWORD=postgres"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_NON_ROOT_USER=postgres"
+      - "POSTGRES_NON_ROOT_USER_PASSWORD=postgres"
+      - "LANDMARKS_DATABASE_NAME=landmarks"
+      - "LANDMARKS_DATABASE_USER=landmarks"
+      - "LANDMARKS_DATABASE_PASSWORD=landmarks"
+    ports:
+      - "15432:5432"
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+      - ./postgresql/initdb:/docker-entrypoint-initdb.d
+
