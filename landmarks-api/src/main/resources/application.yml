@@ -1,0 +1,20 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: landmarks
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      jdbc.lob.non_contextual_creation: true
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:15432/landmarks}
+    username: ${SPRING_DATASOURCE_USERNAME:landmarks}
+    password: ${SPRING_DATASOURCE_PASSWORD:landmarks}
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+

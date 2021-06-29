@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="majid" id="create-country-table">
+        <createTable tableName="country">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="country"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="majid" id="create-city-table">
+        <createTable tableName="city">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_id" type="uuid" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="city"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="majid" id="create-city-country-foreign-key-constraint">
+        <addForeignKeyConstraint
+                baseTableName="city"
+                baseColumnNames="country_id"
+                referencedTableName="country"
+                referencedColumnNames="id"
+                constraintName="fk_city_country"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet author="majid" id="create-city-country-unique-index-constraint">
+        <createIndex tableName="city" indexName="country_id_city_name_index" unique="true">
+            <column name="name"/>
+            <column name="country_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="majid" id="create-landmark-table">
+        <createTable tableName="landmark">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="latitude" type="DECIMAL(10,8)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="longitude" type="DECIMAL(11,8)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="active" type="BOOLEAN" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="importance" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_score" type="INTEGER" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="score_count" type="INTEGER" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_id" type="uuid" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="landmark"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="majid" id="create-landmark-city-foreign-key-constraint">
+        <addForeignKeyConstraint
+                baseTableName="landmark"
+                baseColumnNames="city_id"
+                referencedTableName="city"
+                referencedColumnNames="id"
+                constraintName="fk_landmark_city"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet author="majid" id="create-landmark-indexes">
+        <createIndex tableName="landmark" indexName="landmark_name_index">
+            <column name="name"/>
+            <column name="importance"/>
+            <column name="active"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="majid" id="create-landmark-city-unique-index-constraint">
+        <createIndex tableName="landmark" indexName="city_id_landmark_name_index" unique="true">
+            <column name="name"/>
+            <column name="city_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="majid" id="create-image-table">
+        <createTable tableName="image">
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="landmark_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="image"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="majid" id="create-image-landmark-foreign-key-constraint">
+        <addForeignKeyConstraint
+                baseTableName="image"
+                baseColumnNames="landmark_id"
+                referencedTableName="landmark"
+                referencedColumnNames="id"
+                constraintName="fk_image_landmark"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"/>
+    </changeSet>
+
+</databaseChangeLog>
