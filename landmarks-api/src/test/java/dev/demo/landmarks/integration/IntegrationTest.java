@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class WebTest {
+class IntegrationTest {
 
     @Value("${upload.directory}")
     private String uploadDirectory;

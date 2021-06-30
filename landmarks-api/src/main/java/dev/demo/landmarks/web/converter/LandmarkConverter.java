@@ -31,7 +31,7 @@ public class LandmarkConverter {
         response.setDescription(landmark.getDescription());
         response.setActive(landmark.getActive());
         response.setImportance(landmark.getImportance());
-        response.setScore(landmark.getScore());
+        response.setScore(landmark.getAverageScore());
         response.setImages(landmark.getFileNames().stream().map(path -> baseURL + "/" + path).collect(Collectors.toSet()));
         return response;
     }

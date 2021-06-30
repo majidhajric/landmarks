@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="majid" id="create-vote-table">
+        <createTable tableName="vote">
+            <column name="id" type="uuid">
+                <constraints  primaryKey="true"/>
+            </column>
+            <column name="landmark_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="score" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable tableName="vote"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="majid" id="create-vote-landmark-foreign-key-constraint">
+        <addForeignKeyConstraint
+                baseTableName="vote"
+                baseColumnNames="landmark_id"
+                referencedTableName="landmark"
+                referencedColumnNames="id"
+                constraintName="fk_vote_landmark"
+                onDelete="CASCADE"
+                onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet author="majid" id="drop-vote-columns-from-landmark-table">
+        <dropColumn tableName="landmark" columnName="total_score"/>
+        <dropColumn tableName="landmark" columnName="score_count"/>
+    </changeSet>
+
+</databaseChangeLog>

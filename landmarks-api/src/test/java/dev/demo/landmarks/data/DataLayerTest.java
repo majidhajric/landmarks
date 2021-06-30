@@ -4,9 +4,12 @@ import dev.demo.landmarks.entity.City;
 import dev.demo.landmarks.entity.Country;
 import dev.demo.landmarks.entity.Importance;
 import dev.demo.landmarks.entity.Landmark;
+import dev.demo.landmarks.entity.Vote;
 import dev.demo.landmarks.repository.CityRepository;
 import dev.demo.landmarks.repository.CountryRepository;
 import dev.demo.landmarks.repository.LandmarkRepository;
+import dev.demo.landmarks.repository.VoteRepository;
+import liquibase.pro.packaged.V;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +54,7 @@ class DataLayerTest {
     }
 
     @Test
-    void whenNewLandmarkSave_thanCorrectScore(){
+    void whenNewLandmarkSave_thanCorrectAverageScore(){
         Landmark landmark = new Landmark();
         landmark.setName("Vijećnica");
         landmark.setDescription("Gradska vijećnica");
@@ -59,21 +62,29 @@ class DataLayerTest {
         landmark.setCity(city);
         landmark = landmarkRepository.save(landmark);
 
-        assertEquals(0f, landmark.getScore());
+        assertEquals(0f, landmark.getAverageScore());
     }
 
     @Test
-    void whenExistingLandmarkSave_thanCorrectScore(){
+    void whenExistingLandmarkSave_thanCorrectAverageScore(){
         Landmark landmark = new Landmark();
         landmark.setName("Vijećnica");
         landmark.setDescription("Gradska vijećnica");
         landmark.setImportance(Importance.MEDIUM);
         landmark.setCity(city);
-        landmark.setTotalScore(10);
-        landmark.setScoreCount(2);
         landmark = landmarkRepository.save(landmark);
 
-        assertEquals(5f, landmark.getScore());
+        Vote vote1 = new Vote();
+        vote1.setScore(2);
+
+        Vote vote2 = new Vote();
+        vote2.setScore(4);
+
+        landmark.addVote(vote1);
+        landmark.addVote(vote2);
+
+        landmark = landmarkRepository.save(landmark);
+        assertEquals(3, landmark.getAverageScore());
     }
 
     @Test

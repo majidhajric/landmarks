@@ -23,7 +23,7 @@ public class LandmarkResponse {
 
     private Importance importance;
 
-    private Float score;
+    private Double score;
 
     private Set<String> images;
 }
