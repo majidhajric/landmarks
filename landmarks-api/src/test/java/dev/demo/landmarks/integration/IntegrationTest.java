@@ -9,6 +9,7 @@ import dev.demo.landmarks.repository.CityRepository;
 import dev.demo.landmarks.repository.LandmarkRepository;
 import dev.demo.landmarks.web.dto.LandmarkRequest;
 import dev.demo.landmarks.web.dto.LandmarkResponse;
+import dev.demo.landmarks.web.dto.VoteRequest;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -107,9 +109,10 @@ class IntegrationTest {
                 .getResponse()
                 .getContentAsString();
 
-        List<LandmarkResponse> responseList = mapper.readValue(jsonResponse, new TypeReference<List<LandmarkResponse>>() {});
+        List<LandmarkResponse> responseList = mapper.readValue(jsonResponse, new TypeReference<List<LandmarkResponse>>() {
+        });
         assertEquals(1, responseList.size());
-        assertEquals("one",responseList.get(0).getName());
+        assertEquals("one", responseList.get(0).getName());
 
         jsonResponse = mockMvc.perform(get("/landmarks").param("importance", "MEDIUM"))
                 .andExpect(status().isOk())
@@ -117,7 +120,8 @@ class IntegrationTest {
                 .getResponse()
                 .getContentAsString();
 
-        responseList = mapper.readValue(jsonResponse, new TypeReference<List<LandmarkResponse>>() {});
+        responseList = mapper.readValue(jsonResponse, new TypeReference<List<LandmarkResponse>>() {
+        });
         assertEquals(1, responseList.size());
         assertEquals("two", responseList.get(0).getName());
 
@@ -127,8 +131,43 @@ class IntegrationTest {
                 .getResponse()
                 .getContentAsString();
 
-        responseList = mapper.readValue(jsonResponse, new TypeReference<List<LandmarkResponse>>() {});
+        responseList = mapper.readValue(jsonResponse, new TypeReference<List<LandmarkResponse>>() {
+        });
         assertEquals(1, responseList.size());
         assertEquals("three", responseList.get(0).getName());
+    }
+
+    @Test
+    void whenPostVote_thenVoteCreated() throws Exception {
+        City city = cityRepository.getById(UUID.fromString("11111111-1111-1111-1111-111111111111"));
+
+        Landmark landmark = new Landmark();
+        landmark.setName("vote");
+        landmark.setDescription("vote");
+        landmark.setImportance(Importance.LOW);
+        landmark.setActive(true);
+        landmark.setCity(city);
+        landmark = landmarkRepository.save(landmark);
+
+        assertEquals(0.0, landmark.getAverageScore());
+
+        String landmarkId = landmark.getId().toString();
+
+        VoteRequest voteRequest = new VoteRequest();
+        voteRequest.setScore(5);
+
+        String jsonRequest = mapper.writeValueAsString(voteRequest);
+
+        String jsonResponse = mockMvc.perform(post("/landmarks/" + landmarkId + "/votes")
+                .content(jsonRequest)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        LandmarkResponse landmarkResponse = mapper.readValue(jsonResponse, LandmarkResponse.class);
+
+        assertEquals(5.0, landmarkResponse.getScore());
     }
 }

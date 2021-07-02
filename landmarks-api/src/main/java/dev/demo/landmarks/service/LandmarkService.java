@@ -3,6 +3,7 @@ package dev.demo.landmarks.service;
 import dev.demo.landmarks.entity.City;
 import dev.demo.landmarks.entity.Importance;
 import dev.demo.landmarks.entity.Landmark;
+import dev.demo.landmarks.entity.Vote;
 import dev.demo.landmarks.repository.CityRepository;
 import dev.demo.landmarks.repository.LandmarkRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,5 +44,11 @@ public class LandmarkService {
     public List<Landmark> getLandmarks(String name, List<Importance> importanceList, Boolean active) {
         Specification<Landmark> specification = specifications.getLandmarkSpecification(name, importanceList, active);
         return landmarkRepository.findAll(specification);
+    }
+
+    public Landmark createVote(UUID id, Vote vote) {
+        Landmark landmark = landmarkRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        landmark.addVote(vote);
+        return landmarkRepository.save(landmark);
     }
 }
