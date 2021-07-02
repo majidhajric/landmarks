@@ -4,7 +4,6 @@ import dev.demo.landmarks.entity.City;
 import dev.demo.landmarks.entity.Landmark;
 import dev.demo.landmarks.repository.CityRepository;
 import dev.demo.landmarks.repository.LandmarkRepository;
-import liquibase.pro.packaged.L;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

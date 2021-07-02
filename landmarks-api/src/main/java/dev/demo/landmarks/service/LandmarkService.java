@@ -6,6 +6,7 @@ import dev.demo.landmarks.entity.Landmark;
 import dev.demo.landmarks.repository.CityRepository;
 import dev.demo.landmarks.repository.LandmarkRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,8 @@ public class LandmarkService {
 
     private final CityRepository cityRepository;
 
+    private final Specifications specifications;
+
     public Landmark createLandmark(UUID cityId, Landmark landmark, List<MultipartFile> files) {
         City city = cityRepository.findById(cityId).orElseThrow(EntityNotFoundException::new);
 
@@ -37,7 +40,8 @@ public class LandmarkService {
         return landmarkRepository.save(landmark);
     }
 
-    public List<Landmark> findByNameAndImportance(String name, Importance importance) {
-        return landmarkRepository.findAllActiveByNameAndImportance(name, importance);
+    public List<Landmark> getLandmarks(String name, List<Importance> importanceList, Boolean active) {
+        Specification<Landmark> specification = specifications.getLandmarkSpecification(name, importanceList, active);
+        return landmarkRepository.findAll(specification);
     }
 }
