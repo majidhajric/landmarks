@@ -1,8 +1,10 @@
 package dev.demo.landmarks.web.converter;
 
+import dev.demo.landmarks.entity.City;
+import dev.demo.landmarks.entity.Country;
+import dev.demo.landmarks.entity.Landmark;
 import dev.demo.landmarks.web.dto.LandmarkRequest;
 import dev.demo.landmarks.web.dto.LandmarkResponse;
-import dev.demo.landmarks.entity.Landmark;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.stream.Collectors;
@@ -23,10 +25,15 @@ public class LandmarkConverter {
                 .build()
                 .toUriString();
 
+        City city = landmark.getCity();
+        Country country = city.getCountry();
+
         LandmarkResponse response = new LandmarkResponse();
         response.setId(landmark.getId());
-        response.setCountry(landmark.getCity().getCountry().getName());
-        response.setCity(landmark.getCity().getName());
+        response.setCountryId(country.getId());
+        response.setCountryName(country.getName());
+        response.setCityId(city.getId());
+        response.setCityName(city.getName());
         response.setName(landmark.getName());
         response.setDescription(landmark.getDescription());
         response.setActive(landmark.getActive());

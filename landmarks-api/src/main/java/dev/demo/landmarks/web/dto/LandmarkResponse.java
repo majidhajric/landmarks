@@ -11,9 +11,13 @@ public class LandmarkResponse {
 
     private UUID id;
 
-    private String country;
+    private UUID countryId;
 
-    private String city;
+    private String countryName;
+
+    private UUID cityId;
+
+    private String cityName;
 
     private String name;
 
