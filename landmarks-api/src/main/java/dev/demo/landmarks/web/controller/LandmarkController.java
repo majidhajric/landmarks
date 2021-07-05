@@ -48,10 +48,10 @@ public class LandmarkController {
     // TODO: return Page instead of List
     @GetMapping
     public List<LandmarkResponse> getLandmarks(@RequestParam(name = "name", required = false) String name,
-                                               @RequestParam(name = "importance", required = false) List<Importance> importanceList,
+                                               @RequestParam(name = "importance", required = false) Importance importance,
                                                @RequestParam(name = "active", defaultValue = "true") Boolean active) {
 
-        return landmarkService.getLandmarks(name, importanceList, active)
+        return landmarkService.getLandmarks(name, importance, active)
                 .stream()
                 .map(LandmarkConverter::toResponse)
                 .collect(Collectors.toList());

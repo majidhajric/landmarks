@@ -5,7 +5,6 @@ import dev.demo.landmarks.entity.Landmark;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @Component
 public class Specifications {
 
-    public Specification<Landmark> getLandmarkSpecification(String name, List<Importance> importanceList, Boolean active) {
+    public Specification<Landmark> getLandmarkSpecification(String name, Importance importance, Boolean active) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
@@ -24,9 +23,8 @@ public class Specifications {
                         "%" + name.toLowerCase() + "%"));
             }
 
-            if (importanceList != null) {
-                Path<Importance> importance = root.get("importance");
-                predicates.add(importance.in(importanceList));
+            if (importance != null) {
+                predicates.add(criteriaBuilder.equal(root.get("importance"), importance));
             }
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };

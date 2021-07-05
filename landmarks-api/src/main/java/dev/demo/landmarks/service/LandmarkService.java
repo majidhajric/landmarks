@@ -41,8 +41,8 @@ public class LandmarkService {
         return landmarkRepository.save(landmark);
     }
 
-    public List<Landmark> getLandmarks(String name, List<Importance> importanceList, Boolean active) {
-        Specification<Landmark> specification = specifications.getLandmarkSpecification(name, importanceList, active);
+    public List<Landmark> getLandmarks(String name, Importance importance, Boolean active) {
+        Specification<Landmark> specification = specifications.getLandmarkSpecification(name, importance, active);
         return landmarkRepository.findAll(specification);
     }
 
