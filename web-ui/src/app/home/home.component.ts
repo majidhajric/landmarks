@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Landmark} from "../model/landmark";
+import {LandmarkService} from "../service/landmark.service";
 
 @Component({
   selector: 'app-home',

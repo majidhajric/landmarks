@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageLandmarksComponent } from './manage-landmarks.component';
+import { AdminLandmarkListComponent } from './admin-landmark-list.component';
 
-describe('ManageLandmarksComponent', () => {
-  let component: ManageLandmarksComponent;
-  let fixture: ComponentFixture<ManageLandmarksComponent>;
+describe('AdminLandmarkListComponent', () => {
+  let component: AdminLandmarkListComponent;
+  let fixture: ComponentFixture<AdminLandmarkListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManageLandmarksComponent ]
+      declarations: [ AdminLandmarkListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageLandmarksComponent);
+    fixture = TestBed.createComponent(AdminLandmarkListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

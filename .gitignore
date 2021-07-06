@@ -27,3 +27,4 @@ hs_err_pid*
 .idea
 /postgresql/data/
 /docs
+*/node_modules

@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col- col-md-8 m-auto my-3">
+      <div class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [(ngModel)]="searchName">
+        <select class="form-select w-25 me-2" aria-label="Importance select" [(ngModel)]="searchImportance">
+          <option value="" selected >Show all</option>
+          <option value="LOW">Important</option>
+          <option value="MEDIUM">Very important</option>
+          <option value="HIGH">Must see</option>
+        </select>
+        <button class="btn btn-outline-success" (click)="getLandmarks()">Search</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-md-8 m-auto mt-3">
+      <app-landmark-item *ngFor="let landmark of landmarks" [landmark]="landmark"></app-landmark-item>
+    </div>
+  </div>
+</div>

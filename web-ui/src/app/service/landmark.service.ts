@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {Landmark} from "../model/landmark";
@@ -13,7 +13,12 @@ export class LandmarkService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getLandmarks(): Observable<Landmark[]> {
-    return this.httpClient.get<Landmark[]>(this.API_URL);
+  public getLandmarks(name: string, importance: string, active= true): Observable<Landmark[]> {
+    return this.httpClient.get<Landmark[]>(this.API_URL,
+      {
+        params: new HttpParams()
+          .set('name', name)
+          .set('importance', importance)
+      });
   }
 }
