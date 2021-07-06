@@ -9,13 +9,16 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {LandmarkItemComponent} from "./home/landmark-item/landmark-item.component";
 import {LandmarkListComponent} from "./home/landmark-list/landmark-list.component";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { VoteDialogComponent } from './home/vote-dialog/vote-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LandmarkItemComponent,
-    LandmarkListComponent
+    LandmarkListComponent,
+    VoteDialogComponent
   ],
     imports: [
         BrowserModule,
@@ -23,6 +26,7 @@ import {LandmarkListComponent} from "./home/landmark-list/landmark-list.componen
         BrowserAnimationsModule,
         HttpClientModule,
         FormsModule,
+        NgbModule,
     ],
   providers: [],
   bootstrap: [AppComponent]
