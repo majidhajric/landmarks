@@ -7,6 +7,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import { AdminLandmarkListComponent } from './admin-landmark-list/admin-landmark-list.component';
 import { CreateLandmarkComponent } from './create-landmark/create-landmark.component';
 import { EditLandmarkComponent } from './edit-landmark/edit-landmark.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { EditLandmarkComponent } from './edit-landmark/edit-landmark.component';
   imports: [
     CommonModule,
     AdminRoutingModule,
-    MatSidenavModule
+    MatSidenavModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }

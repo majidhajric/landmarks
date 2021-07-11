@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {LandmarkItemComponent} from "./home/landmark-item/landmark-item.component";
 import {LandmarkListComponent} from "./home/landmark-list/landmark-list.component";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -20,14 +20,15 @@ import { VoteDialogComponent } from './home/vote-dialog/vote-dialog.component';
     LandmarkListComponent,
     VoteDialogComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        FormsModule,
-        NgbModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    NgbModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

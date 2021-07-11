@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Landmark} from "../model/landmark";
+import {catchError} from "rxjs/operators";
+import {LandmarkRequest} from "../model/landmark-request";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,22 @@ export class LandmarkService {
         params: new HttpParams()
           .set('name', name)
           .set('importance', importance)
-      });
+      }).pipe(
+        catchError(err => of([]))
+    );
+  }
+
+  public createLandmark(data: LandmarkRequest, files: File[]) {
+    const formData = new FormData();
+
+    // add the files
+    if (files && files.length) {
+      files.forEach(file => formData.append('file', file));
+    }
+
+    // add the data object
+    formData.append('landmark', new Blob([JSON.stringify(data)], {type: 'application/json'}));
+
+    return this.httpClient.post(this.API_URL, formData);
   }
 }

@@ -1,12 +1,13 @@
 <div class="modal-header">
-  <h4 class="modal-title">Your vote</h4>
+  <h4 class="modal-title">Vote</h4>
 </div>
 <div class="modal-body">
-  <span>Select rating:
-    <ngb-rating [(rate)]="rate"></ngb-rating>
-  </span>
+  <div class="form-group">
+    Select your vote:
+    <ngb-rating [formControl]="ctrl"></ngb-rating>
+  </div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Cancel</button>
-  <button type="button" class="btn btn-primary" (click)="vote()">Vote</button>
+  <button type="button" class="btn btn-primary" (click)="vote()" [disabled]="!ctrl.valid">Submit</button>
 </div>

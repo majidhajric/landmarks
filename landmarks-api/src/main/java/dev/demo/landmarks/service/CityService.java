@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -13,7 +14,7 @@ public class CityService {
 
     private final CityRepository cityRepository;
 
-    public List<City> getAllCities() {
-        return cityRepository.findAll();
+    public List<City> findAllCitiesByCountryId(UUID countryId) {
+        return cityRepository.findAllByCountryId(countryId);
     }
 }

@@ -21,7 +21,9 @@ public class LandmarkConverter {
     }
 
     public static LandmarkResponse toResponse(Landmark landmark) {
-        String baseURL = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(null)
+        String baseURL = ServletUriComponentsBuilder.fromCurrentRequest()
+                .replacePath(null)
+                .query(null)
                 .build()
                 .toUriString();
 
