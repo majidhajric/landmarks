@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -50,5 +51,14 @@ public class LandmarkService {
         Landmark landmark = landmarkRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         landmark.addVote(vote);
         return landmarkRepository.save(landmark);
+    }
+
+    public Landmark getLandmark(UUID id) {
+        return landmarkRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public void deleteLandmark(UUID id) throws IOException {
+        landmarkRepository.deleteById(id);
+        fileService.deleteDirectory(id.toString());
     }
 }

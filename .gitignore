@@ -28,3 +28,4 @@ hs_err_pid*
 /postgresql/data/
 /docs
 */node_modules
+/images

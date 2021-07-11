@@ -8,6 +8,8 @@ import { AdminLandmarkListComponent } from './admin-landmark-list/admin-landmark
 import { CreateLandmarkComponent } from './create-landmark/create-landmark.component';
 import { EditLandmarkComponent } from './edit-landmark/edit-landmark.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { AdminLandmarkItemComponent } from './admin-landmark-item/admin-landmark-item.component';
+import {EllipsisModule} from "ngx-ellipsis";
 
 
 @NgModule({
@@ -15,13 +17,15 @@ import {ReactiveFormsModule} from "@angular/forms";
     AdminLayoutComponent,
     AdminLandmarkListComponent,
     CreateLandmarkComponent,
-    EditLandmarkComponent
+    EditLandmarkComponent,
+    AdminLandmarkItemComponent
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    MatSidenavModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        MatSidenavModule,
+        ReactiveFormsModule,
+        EllipsisModule
+    ]
 })
 export class AdminModule { }

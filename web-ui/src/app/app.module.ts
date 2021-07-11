@@ -11,6 +11,7 @@ import {LandmarkItemComponent} from "./home/landmark-item/landmark-item.componen
 import {LandmarkListComponent} from "./home/landmark-list/landmark-list.component";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VoteDialogComponent } from './home/vote-dialog/vote-dialog.component';
+import {EllipsisModule} from "ngx-ellipsis";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { VoteDialogComponent } from './home/vote-dialog/vote-dialog.component';
     FormsModule,
     NgbModule,
     ReactiveFormsModule,
+    EllipsisModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

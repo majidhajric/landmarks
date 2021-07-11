@@ -39,4 +39,8 @@ export class LandmarkService {
 
     return this.httpClient.post(this.API_URL, formData);
   }
+
+  public deleteLandmark(id: string) {
+    return this.httpClient.delete(this.API_URL + '/' + id);
+  }
 }

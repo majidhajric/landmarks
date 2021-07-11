@@ -1,12 +1,14 @@
 package dev.demo.landmarks.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,5 +52,9 @@ public class FileService {
             log.error("Could not save file", e);
         }
         return savedFiles;
+    }
+
+    public void deleteDirectory(String directoryName) throws IOException {
+        FileUtils.deleteDirectory(new File(directoryName));
     }
 }
