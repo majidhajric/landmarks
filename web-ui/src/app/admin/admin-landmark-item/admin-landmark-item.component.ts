@@ -10,6 +10,7 @@ export class AdminLandmarkItemComponent implements OnInit {
 
   @Input() landmark: Landmark;
   @Output() deleteItemEvent = new EventEmitter<string>();
+  @Output() editItemEvent = new EventEmitter<string>();
 
   constructor() { }
 
@@ -18,5 +19,9 @@ export class AdminLandmarkItemComponent implements OnInit {
 
   deleteLandmark() {
     this.deleteItemEvent.emit(this.landmark.id);
+  }
+
+  editLandmark() {
+    this.editItemEvent.emit(this.landmark.id);
   }
 }

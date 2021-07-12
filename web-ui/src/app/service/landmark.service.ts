@@ -16,12 +16,16 @@ export class LandmarkService {
   constructor(private httpClient: HttpClient) { }
 
   public getLandmarks(name: string, importance: string, active= true): Observable<Landmark[]> {
-    return this.httpClient.get<Landmark[]>(this.API_URL,
-      {
-        params: new HttpParams()
-          .set('name', name)
-          .set('importance', importance)
-      }).pipe(
+    let params = new HttpParams();
+    if(name) {
+      params= params.set('name', name);
+    }
+    if(importance){
+      params= params.set('importance', importance);
+    }
+    params= params.set('active', active);
+
+    return this.httpClient.get<Landmark[]>(this.API_URL,{ params}).pipe(
         catchError(err => of([]))
     );
   }
@@ -38,6 +42,24 @@ export class LandmarkService {
     formData.append('landmark', new Blob([JSON.stringify(data)], {type: 'application/json'}));
 
     return this.httpClient.post(this.API_URL, formData);
+  }
+
+  public updateLandmark(id: string, data: LandmarkRequest, files: File[]) {
+    const formData = new FormData();
+
+    // add the files
+    if (files && files.length) {
+      files.forEach(file => formData.append('file', file));
+    }
+
+    // add the data object
+    formData.append('landmark', new Blob([JSON.stringify(data)], {type: 'application/json'}));
+
+    return this.httpClient.put(this.API_URL + '/' + id, formData);
+  }
+
+  public getLandmark(id: string): Observable<Landmark> {
+    return this.httpClient.get<Landmark>(this.API_URL + '/' + id);
   }
 
   public deleteLandmark(id: string) {

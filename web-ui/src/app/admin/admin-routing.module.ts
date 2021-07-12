@@ -13,10 +13,10 @@ const routes: Routes = [
         path: '', redirectTo: 'active', pathMatch: 'full'
       },
       {
-        path:'active', component: AdminLandmarkListComponent
+        path:'active', component: AdminLandmarkListComponent, data : {active : true}
       },
       {
-        path:'inactive', component: AdminLandmarkListComponent
+        path:'inactive', component: AdminLandmarkListComponent, data : {active : false}
       },
       {
         path: 'create', component: CreateLandmarkComponent

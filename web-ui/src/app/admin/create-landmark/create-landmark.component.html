@@ -1,6 +1,6 @@
 <div class="container mt-3">
   <div class="row">
-    <div class="col-md-8 mx-auto">
+    <div class="col col-md-8 mx-auto">
       <div class="card">
         <div class="card-header">
           <h3>Create new Landmark</h3>
@@ -60,7 +60,7 @@
             <div class="row mb-3">
 
               <div class="form-group col-md-6">
-                <select (change)="changeImportance($event)" formControlName="importance" id="importance"
+                <select formControlName="importance" id="importance"
                         class="form-control">
                   <option value="" disabled>Choose importance</option>
                   <option value="LOW">Important</option>

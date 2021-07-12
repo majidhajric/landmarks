@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LandmarkService} from "../../service/landmark.service";
 import {Landmark} from "../../model/landmark";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin-landmark-list',
@@ -10,15 +11,19 @@ import {Landmark} from "../../model/landmark";
 export class AdminLandmarkListComponent implements OnInit {
 
   landmarks: Landmark[] = [];
+  showActive: boolean;
 
-  constructor(private landmarkService: LandmarkService) { }
+  constructor(private landmarkService: LandmarkService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getLandmarks();
+    this.route.data.subscribe(v => {
+      this.showActive = v['active']
+      this.getLandmarks();
+    });
   }
 
   getLandmarks() {
-    this.landmarkService.getLandmarks('', '', true)
+    this.landmarkService.getLandmarks('', '', this.showActive)
       .subscribe((data: Landmark[]) => {
         this.landmarks= data;
       });
@@ -26,7 +31,11 @@ export class AdminLandmarkListComponent implements OnInit {
 
   deleteLandmark(id: string) {
     this.landmarkService.deleteLandmark(id).subscribe( next =>
-      this.landmarks.splice(this.landmarks.findIndex(item => item.id === id), 1)
+      this.getLandmarks()
     );
+  }
+
+  editLandmark(id: string) {
+    this.router.navigate(['/admin','edit',id]);
   }
 }

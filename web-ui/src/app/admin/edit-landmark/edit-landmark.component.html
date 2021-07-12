@@ -1,1 +1,111 @@
-<p>edit-landmark works!</p>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col col-md-8 mx-auto">
+      <div class="card">
+        <div class="card-header">
+          <h3>Edit Landmark</h3>
+        </div>
+        <div class="card-body">
+
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <div class="row mb-3">
+
+              <div class="form-group col-md-6">
+                <select (change)="changeCountry($event)" formControlName="countryId" id="country" class="form-control">
+                  <option value="" disabled selected>Choose country</option>
+                  <option *ngFor="let country of countries" [value]="country.id">{{country.name}}</option>
+                </select>
+                <div *ngIf="f.countryId.touched && f.countryId.invalid" class="text-danger">
+                  Country is required
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <select formControlName="cityId" id="city" class="form-control">
+                  <option value="" disabled selected>Choose city</option>
+                  <option *ngFor="let city of cities" [value]="city.id">{{city.name}}</option>
+                </select>
+                <div *ngIf="f.cityId.touched && f.cityId.invalid" class="text-danger">
+                  City is required
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="name">Name</label>
+              <input
+                formControlName="name"
+                id="name"
+                type="text"
+                class="form-control">
+              <div *ngIf="f.name.touched && f.name.invalid" class="text-danger">
+                Name is required
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="description">Description</label>
+              <textarea
+                formControlName="description"
+                id="description"
+                class="form-control"
+                rows="3"></textarea>
+              <div *ngIf="f.description.touched && f.description.invalid" class="text-danger">
+                Description is required
+              </div>
+            </div>
+
+            <div class="row mb-3">
+
+              <div class="form-group col-md-6">
+                <select formControlName="importance" id="importance"
+                        class="form-control">
+                  <option value="" disabled>Choose importance</option>
+                  <option value="LOW">Important</option>
+                  <option value="MEDIUM">Very important</option>
+                  <option value="HIGH">Must see</option>
+                </select>
+                <div *ngIf="f.importance.touched && f.importance.invalid" class="text-danger">
+                  Importance is required
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <input
+                  formControlName="file"
+                  id="file"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  class="form-control"
+                  (change)="onFileChange($event)">
+                <div *ngIf="f.file.touched && f.file.invalid" class="text-danger">
+                  Please select at least one image!
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <div class="form-check">
+                <label class="form-check-label" for="activeCheck">Active</label>
+                <input class="form-check-input"
+                       type="checkbox"
+                       checked
+                       id="activeCheck"
+                       formControlName="active">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-outline-secondary mx-3" (click)="backClicked()">Back</button>
+              <button class="btn btn-primary mx-3" type="submit" [disabled]="!form.valid || form.pristine">Submit</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

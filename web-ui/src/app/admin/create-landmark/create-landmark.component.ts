@@ -46,21 +46,15 @@ export class CreateLandmarkComponent implements OnInit {
     }
   }
 
-  onSubmit(){
-    this.landmarkService.createLandmark(this.form.value as LandmarkRequest, this.files).subscribe();
-  }
-
-  changeImportance(event: any) {
-    this.form.controls.importance.setValue(event.target.value, {
-      onlySelf: true
-    })
-  }
-
   changeCountry(event: any) {
     const countryId = event.target.value;
     this.countryService.getCities(countryId).subscribe(cities => {
       this.cities = cities;
       this.form.controls.cityId.enable();
     })
+  }
+
+  onSubmit(){
+    this.landmarkService.createLandmark(this.form.value as LandmarkRequest, this.files).subscribe();
   }
 }

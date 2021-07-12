@@ -61,4 +61,21 @@ public class LandmarkService {
         landmarkRepository.deleteById(id);
         fileService.deleteDirectory(id.toString());
     }
+
+    public Landmark updateLandmark(UUID landmarkId, UUID cityId, Landmark updateLandmark, List<MultipartFile> additionalFiles) {
+        Landmark landmark = getLandmark(landmarkId);
+        City city = cityRepository.findById(cityId).orElseThrow(EntityNotFoundException::new);
+
+        landmark.setCity(city);
+        landmark.setName(updateLandmark.getName());
+        landmark.setDescription(updateLandmark.getDescription());
+        landmark.setImportance(updateLandmark.getImportance());
+        landmark.setActive(updateLandmark.getActive());
+
+        if (additionalFiles != null) {
+            Set<String> fileNames = fileService.saveFiles(landmarkId.toString(), additionalFiles);
+            landmark.getFileNames().addAll(fileNames);
+        }
+        return landmarkRepository.save(landmark);
+    }
 }

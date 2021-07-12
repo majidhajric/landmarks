@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,6 +64,17 @@ public class LandmarkController {
     public LandmarkResponse getLandmark(@PathVariable("id") UUID landmarkId) {
 
         Landmark landmark = landmarkService.getLandmark(landmarkId);
+        return LandmarkConverter.toResponse(landmark);
+    }
+
+    @PutMapping(path = "/{id}")
+    public LandmarkResponse updateLandmark(@PathVariable("id") UUID landmarkId,
+                                           @RequestPart(value = "landmark") LandmarkRequest landmarkRequest,
+                                           @RequestPart(value = "file", required = false) List<MultipartFile> multipartFiles) {
+
+        Landmark landmark = LandmarkConverter.fromRequest(landmarkRequest);
+        UUID cityId = landmarkRequest.getCityId();
+        landmark = landmarkService.updateLandmark(landmarkId, cityId, landmark, multipartFiles);
         return LandmarkConverter.toResponse(landmark);
     }
 
