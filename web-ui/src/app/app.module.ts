@@ -12,6 +12,7 @@ import {LandmarkListComponent} from "./home/landmark-list/landmark-list.componen
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VoteDialogComponent } from './home/vote-dialog/vote-dialog.component';
 import {EllipsisModule} from "ngx-ellipsis";
+import {OAuthModule} from "angular-oauth2-oidc";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {EllipsisModule} from "ngx-ellipsis";
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    OAuthModule.forRoot(),
     FormsModule,
     NgbModule,
     ReactiveFormsModule,

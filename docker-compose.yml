@@ -10,6 +10,9 @@ services:
       - "POSTGRES_USER=postgres"
       - "POSTGRES_NON_ROOT_USER=postgres"
       - "POSTGRES_NON_ROOT_USER_PASSWORD=postgres"
+      - "KEYCLOAK_DATABASE_NAME=keycloak"
+      - "KEYCLOAK_DATABASE_USER=keycloak"
+      - "KEYCLOAK_DATABASE_PASSWORD=keycloak"
       - "LANDMARKS_DATABASE_NAME=landmarks"
       - "LANDMARKS_DATABASE_USER=landmarks"
       - "LANDMARKS_DATABASE_PASSWORD=landmarks"
@@ -19,3 +22,25 @@ services:
       - ./postgresql/data:/var/lib/postgresql/data
       - ./postgresql/initdb:/docker-entrypoint-initdb.d
 
+  keycloak:
+    image: majidhajric/keycloak:latest
+    container_name: keycloak
+    build:
+      context: ./keycloak
+      args:
+        - PORT=9090
+    ports:
+      - "9090:9090"
+    environment:
+      - "PORT=9090"
+      - "KEYCLOAK_USER=keycloak"
+      - "KEYCLOAK_PASSWORD=keycloak"
+      - "DB_VENDOR=POSTGRES"
+      - "DB_ADDR=postgres"
+      - "DB_PORT=5432"
+      - "DB_DATABASE=keycloak"
+      - "DB_USER=keycloak"
+      - "DB_PASSWORD=keycloak"
+      - "PROXY_ADDRESS_FORWARDING=true"
+    depends_on:
+      - postgres

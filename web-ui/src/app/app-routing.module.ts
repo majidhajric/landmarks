@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {LandmarkListComponent} from "./home/landmark-list/landmark-list.component";
+import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
